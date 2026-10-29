@@ -45,26 +45,6 @@
       color-scheme: dark;
     }
   }
-  :root[data-theme="dark"] {
-    --page: #16181d;
-    --ink: #ecebe6;
-    --sky: #141a33;
-    --ground: #2a2d34;
-    --ground-line: #555a66;
-    --player: #ff7a50;
-    --bird: #c9d1e0;
-    --cloud: #ffffff22;
-    --bldg: #232c4a;
-    --bldg2: #1b2340;
-    --lane: #c8c8c8;
-    --glass: #7fb7d6;
-    --bldg3: #2e3a5e;
-    --win: #f2c94c;
-    --leaf: #2f8f55;
-    --trunk: #5a3d22;
-    --panel: #20232bee;
-    color-scheme: dark;
-  }
   
   /* ===== 2. Page layout ===== */
   * {
