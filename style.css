@@ -300,17 +300,17 @@
     border-radius: 20px;
     animation: drift linear infinite;
   }
-  .cloud:nth-child(1) {
+  <div class="cloud cloud--first"></div> {
     top: 30px;
     animation-duration: 22s;
   }
-  .cloud:nth-child(2) {
+  <div class="cloud cloud--second"></div> {
     top: 80px;
     animation-duration: 30s;
     animation-delay: -10s;
     transform: scale(0.7);
   }
-  .cloud:nth-child(3) {
+  <div class="cloud cloud--third"></div> {
     top: 50px;
     animation-duration: 26s;
     animation-delay: -18s;
