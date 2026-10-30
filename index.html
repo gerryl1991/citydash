@@ -1,15 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>City Dash</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>City Dash</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <h1>City Dash</h1>
-  <p class="hint">Space, ↑ or tap to jump. Jump the cars, but stay low for birds: they fly at head height!</p>
-  <p class="hint">The game also becomes faster as the game increases!</p>
+  <p class="hint">
+    Space, ↑ or tap to jump. Jump the cars, but stay low for birds: they fly
+    at head height!
+  </p>
+  <p class="hint">The game gets faster as your score increases!</p>
 
   <div id="game">
     <div id="stars"></div>
@@ -17,9 +22,15 @@
     <div id="skyline"></div>
     <div id="buildings" class="strip"></div>
     <div id="trees" class="strip"></div>
-    <div class="cloud"></div><div class="cloud"></div><div class="cloud"></div>
-    <div class="hud">Score: <span id="score">0</span><br>Best: <span id="best">0</span></div>
-    <div id="player"><i class="head"></i><i class="leg l"></i><i class="leg r"></i><i class="body"></i><i class="arm"></i></div>
+    <div class="cloud cloud--first"></div>
+    <div class="cloud cloud--second"></div>
+    <div class="cloud cloud--third"></div>
+    <div class="hud">
+      Score: <span id="score">0</span><br />Best: <span id="best">0</span>
+    </div>
+    <div id="player">
+      <i class="head"></i><i class="leg l"></i><i class="leg r"></i><i class="body"></i><i class="arm"></i>
+    </div>
     <div id="ground"></div>
     <div id="overlay">
       <h2 id="title">City Dash</h2>
@@ -30,6 +41,7 @@
 
   <button id="mute" type="button">Sound: on</button>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

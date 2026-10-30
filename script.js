@@ -156,7 +156,7 @@ function hitTest() {
   const pad = 5;
   const px1 = 60 + 11,
     px2 = 60 + 44 - 11;
-  const pBottom = y + pad;
+    
   for (const o of obstacles) {
     const overlapX = px2 > o.x + pad && px1 < o.x + o.w - pad;
     const overlapY = y + pad < o.b + o.h - pad && y + 44 - pad > o.b + pad;
