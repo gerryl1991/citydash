@@ -1,523 +1,567 @@
 /* ===== 1. Design tokens (light + dark) ===== */
 :root {
-    --page: #f4f1ea;
-    --ink: #2b2b2b;
-    --sky: #a9d0ee;
-    --ground: #5a5f69;
-    --ground-line: #b9bcc4;
-    --player: #e4572e;
-    --bird: #333a47;
-    --cloud: #ffffffcc;
-    --bldg: #8fa6c0;
-    --bldg2: #758eab;
-    --lane: #f2f2f2;
-    --glass: #bfe3f5;
-    --panel: #ffffffee;
-    --accent: #e4572e;
-    --bldg3: #5f7896;
-    --win: #cfe3f3;
-    --leaf: #3fa863;
-    --trunk: #7a5230;
-    color-scheme: light;
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+  --page: #f4f1ea;
+  --ink: #2b2b2b;
+  --sky: #a9d0ee;
+  --ground: #5a5f69;
+  --ground-line: #b9bcc4;
+  --player: #e4572e;
+  --bird: #333a47;
+  --cloud: #ffffffcc;
+  --bldg: #8fa6c0;
+  --bldg2: #758eab;
+  --lane: #f2f2f2;
+  --glass: #bfe3f5;
+  --panel: #ffffffee;
+  --accent: #e4572e;
+  --bldg3: #5f7896;
+  --win: #cfe3f3;
+  --leaf: #3fa863;
+  --trunk: #7a5230;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #16181d;
+    --ink: #ecebe6;
+    --sky: #141a33;
+    --ground: #2a2d34;
+    --ground-line: #555a66;
+    --player: #ff7a50;
+    --bird: #c9d1e0;
+    --cloud: #ffffff22;
+    --bldg: #232c4a;
+    --bldg2: #1b2340;
+    --lane: #c8c8c8;
+    --glass: #7fb7d6;
+    --bldg3: #2e3a5e;
+    --win: #f2c94c;
+    --leaf: #2f8f55;
+    --trunk: #5a3d22;
+    --panel: #20232bee;
+    color-scheme: dark;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --page: #16181d;
-      --ink: #ecebe6;
-      --sky: #141a33;
-      --ground: #2a2d34;
-      --ground-line: #555a66;
-      --player: #ff7a50;
-      --bird: #c9d1e0;
-      --cloud: #ffffff22;
-      --bldg: #232c4a;
-      --bldg2: #1b2340;
-      --lane: #c8c8c8;
-      --glass: #7fb7d6;
-      --bldg3: #2e3a5e;
-      --win: #f2c94c;
-      --leaf: #2f8f55;
-      --trunk: #5a3d22;
-      --panel: #20232bee;
-      color-scheme: dark;
-    }
-  }
-  
-  /* ===== 2. Page layout ===== */
-  * {
-    box-sizing: border-box;
-  }
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-  }
-  body {
-    background: var(--page);
-    color: var(--ink);
-    font-family: "Trebuchet MS", system-ui, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    padding: 16px;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  h1 {
-    margin: 0;
-    font-size: 1.6rem;
-    letter-spacing: 1px;
-  }
-  .hint {
-    margin: 0;
-    opacity: 0.7;
-    font-size: 0.9rem;
-  }
-  
-  /* ===== 3. Game canvas (the play area) ===== */
-  #game {
-    position: relative;
-    width: 100%;
-    max-width: 760px;
-    height: 260px;
-    background: var(--sky);
-    border: 3px solid var(--ink);
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  #game .hud {
-    position: absolute;
-    top: 10px;
-    right: 14px;
-    z-index: 5;
-    font-weight: bold;
-    font-size: 1.05rem;
-    text-align: right;
-    line-height: 1.5;
-  }
-  
-  /* Ground */
-  #ground {
-    /* road with a sidewalk edge and dashed lane line */
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 40px;
-    background: var(--ground);
-    border-top: 4px solid var(--ground-line);
-  }
-  #ground::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 8px;
-    height: 4px;
-    background: repeating-linear-gradient(
-      90deg,
+}
+
+/* ===== 2. Page layout ===== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--page);
+  color: var(--ink);
+  font-family: "Trebuchet MS", system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+}
+
+.hint {
+  margin: 0;
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+/* ===== 3. Game canvas (the play area) ===== */
+#game {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  height: 260px;
+  background: var(--sky);
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#game .hud {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 5;
+  font-weight: bold;
+  font-size: 1.05rem;
+  text-align: right;
+  line-height: 1.5;
+}
+
+/* Ground */
+#ground {
+  /* road with a sidewalk edge and dashed lane line */
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px;
+  background: var(--ground);
+  border-top: 4px solid var(--ground-line);
+}
+
+#ground::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px;
+  height: 4px;
+  background: repeating-linear-gradient(90deg,
       var(--lane) 0 30px,
-      transparent 30px 60px
-    );
-    animation: lane 0.4s linear infinite;
+      transparent 30px 60px);
+  animation: lane 0.4s linear infinite;
+}
+
+@keyframes lane {
+  to {
+    background-position-x: -60px;
   }
-  @keyframes lane {
-    to {
-      background-position-x: -60px;
-    }
+}
+
+/* City skyline behind the road */
+#skyline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 40px;
+  height: 140px;
+  background: linear-gradient(var(--bldg), var(--bldg)) 0 100% / 46px 90px repeat-x,
+    linear-gradient(var(--bldg2), var(--bldg2)) 23px 100% / 70px 130px repeat-x,
+    linear-gradient(var(--bldg), var(--bldg)) 60px 100% / 110px 60px repeat-x;
+}
+
+/* Moon and twinkling stars */
+#stars {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 110px;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.25;
   }
-  
-  /* City skyline behind the road */
-  #skyline {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 40px;
-    height: 140px;
-    background: linear-gradient(var(--bldg), var(--bldg)) 0 100% / 46px 90px
-        repeat-x,
-      linear-gradient(var(--bldg2), var(--bldg2)) 23px 100% / 70px 130px repeat-x,
-      linear-gradient(var(--bldg), var(--bldg)) 60px 100% / 110px 60px repeat-x;
+
+  to {
+    opacity: 1;
   }
-  
-  /* Moon and twinkling stars */
-  #stars {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 110px;
+}
+
+#moon {
+  position: absolute;
+  top: 20px;
+  left: 10%;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #fdf6d8;
+  box-shadow: 0 0 22px 6px #fff6c866, inset -7px -4px 0 #e8dfb3;
+}
+
+#moon::before,
+#moon::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: #e8dfb3;
+}
+
+#moon::before {
+  left: 8px;
+  top: 10px;
+  width: 8px;
+  height: 8px;
+}
+
+#moon::after {
+  left: 19px;
+  top: 21px;
+  width: 5px;
+  height: 5px;
+}
+
+/* Game over: freeze every animation (legs, wings, lane, scenery, clouds, stars) */
+#game.over *,
+#game.over *::before,
+#game.over *::after {
+  animation-play-state: paused !important;
+}
+
+/* Scrolling scenery: buildings (slow, far) and trees (faster, near) */
+.strip {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  width: 1600px;
+  height: 130px;
+  z-index: 1;
+  animation: scroll 26s linear infinite;
+}
+
+#trees {
+  height: 70px;
+  animation-duration: 12s;
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(-800px);
   }
-  .star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: #fff;
-    border-radius: 50%;
-    animation: twinkle 2.5s ease-in-out infinite alternate;
+}
+
+.bldg {
+  position: absolute;
+  bottom: 0;
+  background: var(--bldg3);
+  border-radius: 3px 3px 0 0;
+  box-shadow: inset -6px 0 0 #0002;
+}
+
+.bldg::before {
+  /* grid of lit windows */
+  content: "";
+  position: absolute;
+  inset: 8px 6px;
+  opacity: 0.85;
+  background: linear-gradient(var(--win), var(--win)) 0 0 / 7px 9px space;
+}
+
+.bldg.antenna::after {
+  /* rooftop antenna */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  width: 2px;
+  height: 14px;
+  background: var(--bldg3);
+}
+
+.tree {
+  position: absolute;
+  bottom: 0;
+  width: 6px;
+  background: var(--trunk);
+  border-radius: 2px;
+}
+
+.tree::before {
+  /* leafy crown */
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: -26px;
+  width: 30px;
+  height: 30px;
+  background: var(--leaf);
+  border-radius: 50%;
+  box-shadow: -9px 9px 0 -3px var(--leaf), 9px 9px 0 -3px var(--leaf);
+}
+
+/* Clouds (decorative, scroll with CSS animation) */
+.cloud {
+  position: absolute;
+  width: 70px;
+  height: 22px;
+  background: var(--cloud);
+  border-radius: 20px;
+  animation: drift linear infinite;
+}
+
+.cloud--first {
+  top: 30px;
+  animation-duration: 22s;
+}
+
+.cloud--second {
+  top: 80px;
+  animation-duration: 30s;
+  animation-delay: -10s;
+  transform: scale(0.7);
+}
+
+.cloud--third {
+  top: 50px;
+  animation-duration: 26s;
+  animation-delay: -18s;
+}
+
+@keyframes drift {
+  from {
+    left: 105%;
   }
-  @keyframes twinkle {
-    from {
-      opacity: 0.25;
-    }
-    to {
-      opacity: 1;
-    }
+
+  to {
+    left: -120px;
   }
-  #moon {
-    position: absolute;
-    top: 20px;
-    left: 10%;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #fdf6d8;
-    box-shadow: 0 0 22px 6px #fff6c866, inset -7px -4px 0 #e8dfb3;
+}
+
+/* Character */
+#player {
+  /* a little runner: head, body, arm, two legs */
+  position: absolute;
+  left: 60px;
+  bottom: 40px;
+  width: 44px;
+  height: 44px;
+  z-index: 3;
+}
+
+#player i {
+  position: absolute;
+  display: block;
+}
+
+#player .head {
+  left: 14px;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  background: #f5c9a0;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: inset 0 5px 0 0 #4a2f1b;
+}
+
+#player .body {
+  left: 15px;
+  top: 15px;
+  width: 14px;
+  height: 16px;
+  background: var(--player);
+  border: 2px solid var(--ink);
+  border-radius: 5px;
+}
+
+#player .arm {
+  left: 20px;
+  top: 17px;
+  width: 5px;
+  height: 13px;
+  background: #f5c9a0;
+  border-radius: 3px;
+  transform-origin: 50% 2px;
+  animation: armswing 0.26s ease-in-out infinite alternate;
+}
+
+#player .leg {
+  top: 29px;
+  width: 6px;
+  height: 15px;
+  background: #2f3e5c;
+  border-radius: 3px;
+  transform-origin: 50% 2px;
+}
+
+#player .leg.l {
+  left: 15px;
+  animation: legswing 0.26s ease-in-out infinite alternate;
+}
+
+#player .leg.r {
+  left: 23px;
+  animation: legswing 0.26s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes legswing {
+  from {
+    transform: rotate(-35deg);
   }
-  #moon::before,
-  #moon::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    background: #e8dfb3;
-  }
-  #moon::before {
-    left: 8px;
-    top: 10px;
-    width: 8px;
-    height: 8px;
-  }
-  #moon::after {
-    left: 19px;
-    top: 21px;
-    width: 5px;
-    height: 5px;
-  }
-  
-  /* Game over: freeze every animation (legs, wings, lane, scenery, clouds, stars) */
-  #game.over *,
-  #game.over *::before,
-  #game.over *::after {
-    animation-play-state: paused !important;
-  }
-  
-  /* Scrolling scenery: buildings (slow, far) and trees (faster, near) */
-  .strip {
-    position: absolute;
-    left: 0;
-    bottom: 40px;
-    width: 1600px;
-    height: 130px;
-    z-index: 1;
-    animation: scroll 26s linear infinite;
-  }
-  #trees {
-    height: 70px;
-    animation-duration: 12s;
-  }
-  @keyframes scroll {
-    to {
-      transform: translateX(-800px);
-    }
-  }
-  .bldg {
-    position: absolute;
-    bottom: 0;
-    background: var(--bldg3);
-    border-radius: 3px 3px 0 0;
-    box-shadow: inset -6px 0 0 #0002;
-  }
-  .bldg::before {
-    /* grid of lit windows */
-    content: "";
-    position: absolute;
-    inset: 8px 6px;
-    opacity: 0.85;
-    background: linear-gradient(var(--win), var(--win)) 0 0 / 7px 9px space;
-  }
-  .bldg.antenna::after {
-    /* rooftop antenna */
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: -14px;
-    width: 2px;
-    height: 14px;
-    background: var(--bldg3);
-  }
-  .tree {
-    position: absolute;
-    bottom: 0;
-    width: 6px;
-    background: var(--trunk);
-    border-radius: 2px;
-  }
-  .tree::before {
-    /* leafy crown */
-    content: "";
-    position: absolute;
-    left: -12px;
-    top: -26px;
-    width: 30px;
-    height: 30px;
-    background: var(--leaf);
-    border-radius: 50%;
-    box-shadow: -9px 9px 0 -3px var(--leaf), 9px 9px 0 -3px var(--leaf);
-  }
-  
-  /* Clouds (decorative, scroll with CSS animation) */
-  .cloud {
-    position: absolute;
-    width: 70px;
-    height: 22px;
-    background: var(--cloud);
-    border-radius: 20px;
-    animation: drift linear infinite;
-  }
-  <div class="cloud cloud--first"></div> {
-    top: 30px;
-    animation-duration: 22s;
-  }
-  <div class="cloud cloud--second"></div> {
-    top: 80px;
-    animation-duration: 30s;
-    animation-delay: -10s;
-    transform: scale(0.7);
-  }
-  <div class="cloud cloud--third"></div> {
-    top: 50px;
-    animation-duration: 26s;
-    animation-delay: -18s;
-  }
-  @keyframes drift {
-    from {
-      left: 105%;
-    }
-    to {
-      left: -120px;
-    }
-  }
-  
-  /* Character */
-  #player {
-    /* a little runner: head, body, arm, two legs */
-    position: absolute;
-    left: 60px;
-    bottom: 40px;
-    width: 44px;
-    height: 44px;
-    z-index: 3;
-  }
-  #player i {
-    position: absolute;
-    display: block;
-  }
-  #player .head {
-    left: 14px;
-    top: 0;
-    width: 16px;
-    height: 16px;
-    background: #f5c9a0;
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    box-shadow: inset 0 5px 0 0 #4a2f1b;
-  }
-  #player .body {
-    left: 15px;
-    top: 15px;
-    width: 14px;
-    height: 16px;
-    background: var(--player);
-    border: 2px solid var(--ink);
-    border-radius: 5px;
-  }
-  #player .arm {
-    left: 20px;
-    top: 17px;
-    width: 5px;
-    height: 13px;
-    background: #f5c9a0;
-    border-radius: 3px;
-    transform-origin: 50% 2px;
-    animation: armswing 0.26s ease-in-out infinite alternate;
-  }
-  #player .leg {
-    top: 29px;
-    width: 6px;
-    height: 15px;
-    background: #2f3e5c;
-    border-radius: 3px;
-    transform-origin: 50% 2px;
-  }
-  #player .leg.l {
-    left: 15px;
-    animation: legswing 0.26s ease-in-out infinite alternate;
-  }
-  #player .leg.r {
-    left: 23px;
-    animation: legswing 0.26s ease-in-out infinite alternate-reverse;
-  }
-  @keyframes legswing {
-    from {
-      transform: rotate(-35deg);
-    }
-    to {
-      transform: rotate(35deg);
-    }
-  }
-  @keyframes armswing {
-    from {
-      transform: rotate(40deg);
-    }
-    to {
-      transform: rotate(-40deg);
-    }
-  }
-  #player.jumping .leg.l {
-    animation: none;
-    transform: rotate(-40deg);
-  }
-  #player.jumping .leg.r {
-    animation: none;
+
+  to {
     transform: rotate(35deg);
   }
-  #player.jumping .arm {
-    animation: none;
-    transform: rotate(160deg);
+}
+
+@keyframes armswing {
+  from {
+    transform: rotate(40deg);
   }
-  #player.dead {
-    filter: grayscale(0.6);
+
+  to {
+    transform: rotate(-40deg);
   }
-  
-  /* Obstacles: cars (ground) */
-  .car {
-    position: absolute;
-    bottom: 40px;
-    z-index: 2;
-    border: 3px solid var(--ink);
-    border-radius: 14px 14px 4px 4px;
+}
+
+#player.jumping .leg.l {
+  animation: none;
+  transform: rotate(-40deg);
+}
+
+#player.jumping .leg.r {
+  animation: none;
+  transform: rotate(35deg);
+}
+
+#player.jumping .arm {
+  animation: none;
+  transform: rotate(160deg);
+}
+
+#player.dead {
+  filter: grayscale(0.6);
+}
+
+/* Obstacles: cars (ground) */
+.car {
+  position: absolute;
+  bottom: 40px;
+  z-index: 2;
+  border: 3px solid var(--ink);
+  border-radius: 14px 14px 4px 4px;
+}
+
+.car::before {
+  /* windows */
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 4px;
+  height: 38%;
+  background: linear-gradient(var(--glass), var(--glass)) 0 0 / 44% 100% no-repeat,
+    linear-gradient(var(--glass), var(--glass)) 100% 0 / 44% 100% no-repeat;
+  border-radius: 6px;
+}
+
+.car::after {
+  /* wheels */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 16px;
+  background: radial-gradient(circle at 18px 50%,
+      #15171c 0 6px,
+      transparent 7px),
+    radial-gradient(circle at calc(100% - 18px) 50%,
+      #15171c 0 6px,
+      transparent 7px);
+}
+
+/* Obstacles: birds (in the air) */
+.bird {
+  position: absolute;
+  width: 34px;
+  height: 18px;
+  z-index: 2;
+  background: var(--bird);
+  border-radius: 50% 50% 45% 45%;
+}
+
+.bird::before {
+  /* flapping wing */
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: -12px;
+  width: 20px;
+  height: 16px;
+  background: var(--bird);
+  border-radius: 100% 0 0 0;
+  transform-origin: 50% 100%;
+  animation: flap 0.22s ease-in-out infinite alternate;
+}
+
+.bird::after {
+  /* beak */
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 4px;
+  border: 5px solid transparent;
+  border-right: 9px solid #f2b13c;
+  border-left: 0;
+}
+
+@keyframes flap {
+  from {
+    transform: scaleY(1);
   }
-  .car::before {
-    /* windows */
-    content: "";
-    position: absolute;
-    left: 10%;
-    right: 10%;
-    top: 4px;
-    height: 38%;
-    background: linear-gradient(var(--glass), var(--glass)) 0 0 / 44% 100%
-        no-repeat,
-      linear-gradient(var(--glass), var(--glass)) 100% 0 / 44% 100% no-repeat;
-    border-radius: 6px;
+
+  to {
+    transform: scaleY(-0.9);
   }
-  .car::after {
-    /* wheels */
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -8px;
-    height: 16px;
-    background: radial-gradient(
-        circle at 18px 50%,
-        #15171c 0 6px,
-        transparent 7px
-      ),
-      radial-gradient(
-        circle at calc(100% - 18px) 50%,
-        #15171c 0 6px,
-        transparent 7px
-      );
-  }
-  
-  /* Obstacles: birds (in the air) */
-  .bird {
-    position: absolute;
-    width: 34px;
-    height: 18px;
-    z-index: 2;
-    background: var(--bird);
-    border-radius: 50% 50% 45% 45%;
-  }
-  .bird::before {
-    /* flapping wing */
-    content: "";
-    position: absolute;
-    left: 8px;
-    top: -12px;
-    width: 20px;
-    height: 16px;
-    background: var(--bird);
-    border-radius: 100% 0 0 0;
-    transform-origin: 50% 100%;
-    animation: flap 0.22s ease-in-out infinite alternate;
-  }
-  .bird::after {
-    /* beak */
-    content: "";
-    position: absolute;
-    left: -8px;
-    top: 4px;
-    border: 5px solid transparent;
-    border-right: 9px solid #f2b13c;
-    border-left: 0;
-  }
-  @keyframes flap {
-    from {
-      transform: scaleY(1);
-    }
-    to {
-      transform: scaleY(-0.9);
-    }
-  }
-  
-  /* Start / game-over overlay */
-  #overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    text-align: center;
-    background: var(--panel);
-  }
-  #overlay h2 {
-    margin: 0;
-    font-size: 1.8rem;
-  }
-  #overlay p {
-    margin: 0;
-  }
-  #overlay button {
-    margin-top: 6px;
-    padding: 10px 22px;
-    font: inherit;
-    font-weight: bold;
-    color: #fff;
-    background: var(--accent);
-    border: 3px solid var(--ink);
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  #overlay.hidden {
-    display: none;
-  }
-  #mute {
-    background: none;
-    border: 2px solid var(--ink);
-    color: var(--ink);
-    border-radius: 8px;
-    padding: 4px 12px;
-    font: inherit;
-    cursor: pointer;
-  }
-  
+}
+
+/* Start / game-over overlay */
+#overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  background: var(--panel);
+}
+
+#overlay h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+#overlay p {
+  margin: 0;
+}
+
+#overlay button {
+  margin-top: 6px;
+  padding: 10px 22px;
+  font: inherit;
+  font-weight: bold;
+  color: #fff;
+  background: var(--accent);
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#overlay.hidden {
+  display: none;
+}
+
+#mute {
+  background: none;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 4px 12px;
+  font: inherit;
+  cursor: pointer;
+}
